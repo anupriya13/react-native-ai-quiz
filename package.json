@@ -1,0 +1,41 @@
+{
+  "name": "react-native-ai-quiz",
+  "version": "1.0.0",
+  "description": "Cross-platform React Native module that generates AI-powered quiz questions dynamically using Azure OpenAI",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "react-native",
+    "ai",
+    "quiz",
+    "azure",
+    "openai",
+    "questions",
+    "generator",
+    "cross-platform"
+  ],
+  "author": "Anupriya Verma",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anupriya13/react-native-ai-quiz.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anupriya13/react-native-ai-quiz/issues"
+  },
+  "homepage": "https://github.com/anupriya13/react-native-ai-quiz#readme",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.70.0"
+  },
+  "files": [
+    "src/",
+    "LICENSE",
+    "README.md"
+  ]
+}
