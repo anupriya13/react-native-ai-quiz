@@ -24,6 +24,10 @@ class AzureOpenAI {
       throw new Error('Both apiKey and endpoint are required for Azure OpenAI configuration');
     }
 
+    if (!config.endpoint.startsWith('https://')) {
+      throw new Error('Azure OpenAI endpoint must start with https://');
+    }
+
     this.apiKey = config.apiKey;
     this.endpoint = config.endpoint.replace(/\/$/, ''); // Remove trailing slash
     this.apiVersion = config.apiVersion || this.apiVersion;
