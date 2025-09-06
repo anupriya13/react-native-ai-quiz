@@ -13,13 +13,24 @@ import {
 
 import { ReactNativeAIQuiz, QuizQuestion, AzureOpenAIConfig } from 'react-native-ai-quiz';
 
+/**
+ * React Native AI Quiz Demo App
+ * 
+ * To use this app with your Azure OpenAI service:
+ * 1. Replace the azureConfig values below with your actual Azure OpenAI credentials
+ * 2. Get your endpoint from Azure Portal (e.g., https://your-resource.openai.azure.com)
+ * 3. Get your API key from Azure Portal > Your OpenAI Resource > Keys and Endpoint
+ * 4. Use your deployment name (the name you gave to your model deployment)
+ */
+
 const App = () => {
-  const [azureConfig, setAzureConfig] = useState<AzureOpenAIConfig>({
-    endpoint: '',
-    apiKey: '',
-    deploymentName: '',
+  // Configure your Azure OpenAI settings here
+  const azureConfig: AzureOpenAIConfig = {
+    endpoint: 'https://your-resource.openai.azure.com',
+    apiKey: 'your-api-key-here',
+    deploymentName: 'gpt-35-turbo',
     apiVersion: '2023-12-01-preview',
-  });
+  };
   
   const [topic, setTopic] = useState('');
   const [numberOfQuestions, setNumberOfQuestions] = useState('5');
@@ -32,8 +43,8 @@ const App = () => {
   const aiQuiz = new ReactNativeAIQuiz();
 
   const handleGenerateQuiz = async () => {
-    if (!azureConfig.endpoint || !azureConfig.apiKey || !azureConfig.deploymentName || !topic) {
-      Alert.alert('Error', 'Please fill in all required fields');
+    if (!topic) {
+      Alert.alert('Error', 'Please enter a topic for the quiz');
       return;
     }
 
@@ -76,34 +87,6 @@ const App = () => {
       `You scored ${results.correct} out of ${results.total} (${results.percentage}%)`
     );
   };
-
-  const renderConfigSection = () => (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>Azure OpenAI Configuration</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Azure OpenAI Endpoint"
-        value={azureConfig.endpoint}
-        onChangeText={(text) => setAzureConfig({...azureConfig, endpoint: text})}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="API Key"
-        value={azureConfig.apiKey}
-        onChangeText={(text) => setAzureConfig({...azureConfig, apiKey: text})}
-        secureTextEntry
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Deployment Name"
-        value={azureConfig.deploymentName}
-        onChangeText={(text) => setAzureConfig({...azureConfig, deploymentName: text})}
-        autoCapitalize="none"
-      />
-    </View>
-  );
 
   const renderQuizConfigSection = () => (
     <View style={styles.section}>
@@ -188,8 +171,14 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <Text style={styles.title}>AI Quiz Generator</Text>
+        <Text style={styles.subtitle}>React Native Module Demo</Text>
         
-        {renderConfigSection()}
+        <View style={styles.demoNotice}>
+          <Text style={styles.demoText}>
+            Demo Mode: This shows the React Native app interface. The actual app connects to Azure OpenAI to generate real quiz questions.
+          </Text>
+        </View>
+        
         {renderQuizConfigSection()}
         
         {questions.length > 0 && (
@@ -224,8 +213,27 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 8,
     color: '#333',
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+    color: '#666',
+  },
+  demoNotice: {
+    backgroundColor: '#fff3cd',
+    padding: 12,
+    marginBottom: 16,
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#ffc107',
+  },
+  demoText: {
+    fontSize: 14,
+    color: '#856404',
+    fontStyle: 'italic',
   },
   section: {
     backgroundColor: '#fff',

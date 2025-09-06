@@ -4,7 +4,7 @@ This is an example React Native app demonstrating the usage of `react-native-ai-
 
 ## Features Demonstrated
 
-- Azure OpenAI configuration setup
+- Azure OpenAI configuration setup (in code)
 - Quiz generation with customizable topics and difficulty
 - Interactive quiz interface
 - Real-time answer selection
@@ -34,15 +34,27 @@ npm run ios
 
 ## Configuration
 
-Before using the app, you'll need to provide your Azure OpenAI configuration:
+Before using the app, you'll need to configure your Azure OpenAI credentials in the code:
 
-1. **Endpoint**: Your Azure OpenAI resource endpoint (e.g., `https://your-resource.openai.azure.com`)
-2. **API Key**: Your Azure OpenAI API key
-3. **Deployment Name**: The name of your deployed model (e.g., `gpt-35-turbo`)
+1. Open `App.tsx` 
+2. Find the `azureConfig` object (around line 28)
+3. Replace the placeholder values with your actual Azure OpenAI credentials:
+   - **Endpoint**: Your Azure OpenAI resource endpoint (e.g., `https://your-resource.openai.azure.com`)
+   - **API Key**: Your Azure OpenAI API key
+   - **Deployment Name**: The name of your deployed model (e.g., `gpt-35-turbo`)
+
+```typescript
+const azureConfig: AzureOpenAIConfig = {
+  endpoint: 'https://your-resource.openai.azure.com',
+  apiKey: 'your-actual-api-key',
+  deploymentName: 'your-deployment-name',
+  apiVersion: '2023-12-01-preview',
+};
+```
 
 ## Usage
 
-1. Fill in your Azure OpenAI configuration in the app
+1. Configure your Azure OpenAI credentials in `App.tsx` (see Configuration section above)
 2. Enter a topic for your quiz (e.g., "React Native", "JavaScript", "Python")
 3. Set the number of questions (1-20)
 4. Choose difficulty level (easy, medium, hard)
@@ -52,7 +64,7 @@ Before using the app, you'll need to provide your Azure OpenAI configuration:
 
 ## Features
 
-- **Real-time validation**: The app checks that all required fields are filled
+- **Simplified setup**: Configuration is done once in the code, not through UI forms
 - **Loading states**: Shows loading indicator while generating questions
 - **Answer tracking**: Highlights selected answers and shows correct/incorrect after submission
 - **Score calculation**: Displays final score with percentage
