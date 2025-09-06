@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Native AI Quiz - Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+        .screen.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+        .half {
+            flex: 1;
+        }
+        .picker {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .picker-option {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .picker-option.selected {
+            background: #007AFF;
+            color: white;
+        }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .note {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007AFF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .question-container {
+            padding: 20px;
+        }
+        .progress {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .option {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option:hover {
+            border-color: #007AFF;
+        }
+        .option.selected {
+            border-color: #007AFF;
+            background: #e3f2fd;
+        }
+        .option.correct {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+        }
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffeaea;
+        }
+        .explanation {
+            background: white;
+            border-left: 4px solid #007AFF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .explanation-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .nav-btn {
+            padding: 12px 20px;
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            min-width: 80px;
+        }
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .results {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .score {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin: 20px 0;
+        }
+        .demo-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .demo-btn {
+            display: block;
+            width: 150px;
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .demo-btn:hover {
+            background: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-controls">
+        <button class="demo-btn" onclick="showScreen('config')">Configuration</button>
+        <button class="demo-btn" onclick="showScreen('loading')">Loading</button>
+        <button class="demo-btn" onclick="showScreen('quiz')">Quiz Question</button>
+        <button class="demo-btn" onclick="showScreen('explanation')">With Explanation</button>
+        <button class="demo-btn" onclick="showScreen('results')">Results</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 style="margin: 0;">React Native AI Quiz</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9;">Powered by Azure OpenAI</p>
+        </div>
+
+        <!-- Configuration Screen -->
+        <div id="config" class="screen active">
+            <div class="content">
+                <div class="title">AI Quiz Generator</div>
+                <div class="subtitle">Configure your Azure OpenAI settings</div>
+
+                <div class="input-group">
+                    <label class="label">Azure OpenAI Endpoint *</label>
+                    <input type="text" class="input" placeholder="https://your-resource.openai.azure.com" value="https://demo-resource.openai.azure.com">
+                </div>
+
+                <div class="input-group">
+                    <label class="label">API Key *</label>
+                    <input type="password" class="input" placeholder="Your Azure OpenAI API key" value="••••••••••••••••">
+                </div>
+
+                <div class="input-group">
+                    <label class="label">Deployment Name</label>
+                    <input type="text" class="input" placeholder="gpt-35-turbo" value="gpt-35-turbo">
+                </div>
+
+                <hr style="border: none; height: 1px; background: #ddd; margin: 20px 0;">
+
+                <div class="input-group">
+                    <label class="label">Quiz Topic *</label>
+                    <input type="text" class="input" placeholder="e.g., JavaScript Programming, History, Science" value="JavaScript Programming">
+                </div>
+
+                <div class="row">
+                    <div class="half">
+                        <div class="input-group">
+                            <label class="label">Difficulty</label>
+                            <div class="picker">
+                                <button class="picker-option">Easy</button>
+                                <button class="picker-option selected">Medium</button>
+                                <button class="picker-option">Hard</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="half">
+                        <div class="input-group">
+                            <label class="label">Questions</label>
+                            <div class="picker">
+                                <button class="picker-option">3</button>
+                                <button class="picker-option selected">5</button>
+                                <button class="picker-option">10</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn">Start Quiz</button>
+
+                <div class="note">
+                    * Required fields. This example uses Azure OpenAI. Make sure you have a valid Azure OpenAI resource with a deployed model.
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loading" class="screen">
+            <div class="loading">
+                <div class="spinner"></div>
+                <div style="font-size: 16px; color: #666;">Generating your quiz...</div>
+                <div style="font-size: 14px; color: #999; margin-top: 10px;">This may take a moment</div>
+            </div>
+        </div>
+
+        <!-- Quiz Question Screen -->
+        <div id="quiz" class="screen">
+            <div class="question-container">
+                <div class="progress">Question 1 of 5</div>
+                
+                <div class="question">
+                    What is the primary purpose of JavaScript in web development?
+                </div>
+
+                <div class="option">
+                    A. To style web pages and define layout
+                </div>
+                <div class="option selected">
+                    B. To add interactivity and dynamic behavior to web pages
+                </div>
+                <div class="option">
+                    C. To structure the content of web pages
+                </div>
+                <div class="option">
+                    D. To manage server-side databases
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-btn" disabled>Previous</button>
+                    <button class="nav-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz with Explanation -->
+        <div id="explanation" class="screen">
+            <div class="question-container">
+                <div class="progress">Question 1 of 5</div>
+                
+                <div class="question">
+                    What is the primary purpose of JavaScript in web development?
+                </div>
+
+                <div class="option">
+                    A. To style web pages and define layout
+                </div>
+                <div class="option correct">
+                    B. To add interactivity and dynamic behavior to web pages
+                </div>
+                <div class="option">
+                    C. To structure the content of web pages
+                </div>
+                <div class="option">
+                    D. To manage server-side databases
+                </div>
+
+                <div class="explanation">
+                    <div class="explanation-title">Explanation:</div>
+                    <div>JavaScript is primarily used to add interactivity and dynamic behavior to web pages. While HTML structures content and CSS handles styling, JavaScript enables features like form validation, animations, real-time updates, and user interactions.</div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-btn" disabled>Previous</button>
+                    <button class="nav-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results" class="screen">
+            <div class="results">
+                <div class="title">Quiz Complete!</div>
+                <div class="score">Score: 4/5 (80%)</div>
+                
+                <div style="text-align: left; background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <div style="font-weight: 600; margin-bottom: 15px;">Detailed Results:</div>
+                    <div style="margin-bottom: 10px;">✅ Question 1: Correct (JavaScript purpose)</div>
+                    <div style="margin-bottom: 10px;">✅ Question 2: Correct (Variable declaration)</div>
+                    <div style="margin-bottom: 10px;">❌ Question 3: Incorrect (Array methods)</div>
+                    <div style="margin-bottom: 10px;">✅ Question 4: Correct (Event handling)</div>
+                    <div style="margin-bottom: 10px;">✅ Question 5: Correct (Async programming)</div>
+                </div>
+
+                <button class="btn">Take Another Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Add interactivity to picker options
+        document.querySelectorAll('.picker-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected from siblings
+                this.parentNode.querySelectorAll('.picker-option').forEach(sibling => {
+                    sibling.classList.remove('selected');
+                });
+                // Add selected to clicked option
+                this.classList.add('selected');
+            });
+        });
+
+        // Add interactivity to quiz options
+        document.querySelectorAll('#quiz .option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected from siblings
+                this.parentNode.querySelectorAll('.option').forEach(sibling => {
+                    sibling.classList.remove('selected');
+                });
+                // Add selected to clicked option
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>
