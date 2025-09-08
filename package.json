@@ -12,7 +12,14 @@
     "test-local": "node test-local.js",
     "test-security": "node test-security.js",
     "demo": "node demo.js",
-    "example": "cd example && npm install && npm run start"
+    "example": "cd example && npm install --legacy-peer-deps && npm run start",
+    "example:setup": "cd example && npm install --legacy-peer-deps",
+    "example:start": "cd example && npm start",
+    "example:android": "cd example && npm run android",
+    "example:ios": "cd example && npm run ios",
+    "example:windows": "npm run example:setup && npm run example:start",
+    "setup:windows": "node setup-windows.js",
+    "troubleshoot": "node troubleshoot-windows.js"
   },
   "keywords": [
     "react-native",

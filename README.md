@@ -40,18 +40,28 @@ This module works on all React Native platforms:
 
 ## 🪟 Windows Development Guide
 
-**Quick Start on Windows:**
+**🚀 One-Command Setup for Windows:**
 ```bash
-# Option 1: One-command start (from root directory)
 git clone https://github.com/anupriya13/react-native-ai-quiz.git
 cd react-native-ai-quiz
-npm run example  # Installs dependencies and starts Metro
+npm run setup:windows  # Automated Windows setup with all dependencies
+```
 
-# Option 2: Manual setup (for customization)
-cd react-native-ai-quiz/example
-npm install --legacy-peer-deps
-npm start  # Start Metro bundler
-npm run android  # Run on Android (in new terminal)
+**⚡ Quick Start Options:**
+```bash
+# Option 1: Automated (Recommended)
+npm run setup:windows          # Complete Windows setup
+npm run example:start           # Start Metro bundler
+npm run example:android         # Run on Android (new terminal)
+
+# Option 2: Manual Setup
+cd example
+npm install --legacy-peer-deps  # Windows-compatible dependency installation
+npm start                       # Start Metro
+npm run android                 # Run app (new terminal)
+
+# Option 3: All-in-one (starts setup + Metro)
+npm run example:windows
 ```
 
 **Configure Azure OpenAI:**
@@ -65,18 +75,21 @@ const azureConfig: AzureOpenAIConfig = {
 };
 ```
 
-**Windows Compatibility:**
-- ✅ Works with standard React Native CLI (no `react-native-windows` needed)
-- ✅ Metro config included to fix "No Metro config found" error
-- ✅ Compatible with VS Code, Android Studio
-- ✅ Supports `--legacy-peer-deps` for dependency resolution
+**🔧 Windows Compatibility Features:**
+- ✅ **Windows-specific setup script** (`setup:windows`) handles all dependencies
+- ✅ **Metro config optimized** for Windows with proper path handling
+- ✅ **Legacy peer deps support** for Windows dependency resolution  
+- ✅ **Multiple setup options** (automated, manual, step-by-step)
+- ✅ **Comprehensive troubleshooting** for common Windows issues
+- ✅ **Works with Command Prompt and PowerShell**
 
-**Windows-Specific Troubleshooting:**
-- **Metro Error**: Ensure you're in `example/` directory, not root
-- **Dependencies**: Use `npm install --legacy-peer-deps`
-- **Clear Cache**: `npx react-native start --reset-cache`
+**🆘 Common Windows Issues:**
+- **"No Metro config found"**: Fixed with included metro.config.js
+- **npm install fails**: Use `npm install --legacy-peer-deps`
+- **Port 8081 busy**: Run `npx kill-port 8081`
+- **Android issues**: Ensure Android Studio and emulator are properly configured
 
-📚 **Complete Windows guide**: [LOCAL_TESTING_GUIDE.md](LOCAL_TESTING_GUIDE.md#windows-specific-issues)
+📚 **Complete Windows guide**: [WINDOWS_GUIDE.md](WINDOWS_GUIDE.md) - Comprehensive setup, troubleshooting, and development workflow for Windows users.
 
 ## 🔐 Secure Setup
 
