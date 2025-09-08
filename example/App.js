@@ -13,12 +13,14 @@ const {
 const AIQuiz = require('../index');
 
 const App = () => {
-  const [azureConfig, setAzureConfig] = useState({
-    endpoint: '',
-    apiKey: '',
+  // Hardcoded Azure OpenAI configuration
+  const azureConfig = {
+    endpoint: 'https://your-resource.openai.azure.com',
+    apiKey: 'your-api-key-here',
     deploymentName: 'gpt-35-turbo', // or gpt-4
     apiVersion: '2024-02-15-preview',
-  });
+  };
+  
   const [topic, setTopic] = useState('JavaScript Programming');
   const [difficulty, setDifficulty] = useState('medium');
   const [numberOfQuestions, setNumberOfQuestions] = useState(5);
@@ -44,10 +46,6 @@ const App = () => {
   };
 
   const startQuiz = () => {
-    if (!azureConfig.endpoint || !azureConfig.apiKey) {
-      Alert.alert('Configuration Required', 'Please enter your Azure OpenAI endpoint and API key');
-      return;
-    }
     if (!topic.trim()) {
       Alert.alert('Topic Required', 'Please enter a topic for the quiz');
       return;
@@ -79,46 +77,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
       <View style={styles.configContainer}>
         <Text style={styles.title}>React Native AI Quiz</Text>
-        <Text style={styles.subtitle}>Configure your Azure OpenAI settings</Text>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Azure OpenAI Endpoint *</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="https://your-resource.openai.azure.com"
-            value={azureConfig.endpoint}
-            onChangeText={(text) => setAzureConfig(prev => ({ ...prev, endpoint: text }))}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>API Key *</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Your Azure OpenAI API key"
-            value={azureConfig.apiKey}
-            onChangeText={(text) => setAzureConfig(prev => ({ ...prev, apiKey: text }))}
-            secureTextEntry
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Deployment Name</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="gpt-35-turbo"
-            value={azureConfig.deploymentName}
-            onChangeText={(text) => setAzureConfig(prev => ({ ...prev, deploymentName: text }))}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-        </View>
-
-        <View style={styles.divider} />
+        <Text style={styles.subtitle}>Powered by Azure OpenAI</Text>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Quiz Topic *</Text>
@@ -187,7 +146,8 @@ const App = () => {
         </TouchableOpacity>
 
         <Text style={styles.note}>
-          * Required fields. This example uses Azure OpenAI. Make sure you have a valid Azure OpenAI resource with a deployed model.
+          Configure your Azure OpenAI credentials in the code before using. 
+          This example demonstrates the quiz functionality with hardcoded configuration.
         </Text>
       </View>
     </SafeAreaView>
@@ -236,11 +196,6 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
     color: '#333',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#ddd',
-    marginVertical: 20,
   },
   row: {
     flexDirection: 'row',

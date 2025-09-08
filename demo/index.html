@@ -260,24 +260,7 @@
         <div id="config" class="screen active">
             <div class="content">
                 <div class="title">AI Quiz Generator</div>
-                <div class="subtitle">Configure your Azure OpenAI settings</div>
-
-                <div class="input-group">
-                    <label class="label">Azure OpenAI Endpoint *</label>
-                    <input type="text" class="input" placeholder="https://your-resource.openai.azure.com" value="https://demo-resource.openai.azure.com">
-                </div>
-
-                <div class="input-group">
-                    <label class="label">API Key *</label>
-                    <input type="password" class="input" placeholder="Your Azure OpenAI API key" value="••••••••••••••••">
-                </div>
-
-                <div class="input-group">
-                    <label class="label">Deployment Name</label>
-                    <input type="text" class="input" placeholder="gpt-35-turbo" value="gpt-35-turbo">
-                </div>
-
-                <hr style="border: none; height: 1px; background: #ddd; margin: 20px 0;">
+                <div class="subtitle">Powered by Azure OpenAI</div>
 
                 <div class="input-group">
                     <label class="label">Quiz Topic *</label>
@@ -307,10 +290,11 @@
                     </div>
                 </div>
 
-                <button class="btn">Start Quiz</button>
+                <button class="btn" onclick="showScreen('loading')">Start Quiz</button>
 
                 <div class="note">
-                    * Required fields. This example uses Azure OpenAI. Make sure you have a valid Azure OpenAI resource with a deployed model.
+                    Configure your Azure OpenAI credentials in the code before using. 
+                    This example demonstrates the quiz functionality with hardcoded configuration.
                 </div>
             </div>
         </div>
@@ -381,7 +365,7 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="nav-btn" disabled>Previous</button>
+                    <button class="nav-btn">Previous</button>
                     <button class="nav-btn">Next</button>
                 </div>
             </div>
@@ -390,16 +374,33 @@
         <!-- Results Screen -->
         <div id="results" class="screen">
             <div class="results">
-                <div class="title">Quiz Complete!</div>
-                <div class="score">Score: 4/5 (80%)</div>
+                <div class="title">Quiz Complete! 🎉</div>
+                <div class="score">Final Score: 4/5 (80%)</div>
                 
-                <div style="text-align: left; background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <div style="font-weight: 600; margin-bottom: 15px;">Detailed Results:</div>
-                    <div style="margin-bottom: 10px;">✅ Question 1: Correct (JavaScript purpose)</div>
-                    <div style="margin-bottom: 10px;">✅ Question 2: Correct (Variable declaration)</div>
-                    <div style="margin-bottom: 10px;">❌ Question 3: Incorrect (Array methods)</div>
-                    <div style="margin-bottom: 10px;">✅ Question 4: Correct (Event handling)</div>
-                    <div style="margin-bottom: 10px;">✅ Question 5: Correct (Async programming)</div>
+                <div style="text-align: left; background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #007AFF;">
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #333;">Quiz Summary</div>
+                    <div style="color: #666; margin-bottom: 5px;">Topic: JavaScript Programming</div>
+                    <div style="color: #666; margin-bottom: 5px;">Difficulty: Medium</div>
+                    <div style="color: #666;">Questions: 5</div>
+                </div>
+
+                <div style="text-align: left; margin: 20px 0;">
+                    <div style="font-weight: 600; margin-bottom: 15px; color: #333;">Detailed Results</div>
+                    
+                    <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ddd;">
+                        <div style="color: #007AFF; font-weight: 600; margin-bottom: 5px;">Question 1</div>
+                        <div style="margin-bottom: 10px;">What is the primary purpose of JavaScript in web development?</div>
+                        <div style="color: #4CAF50; margin-bottom: 5px;">Your answer: B ✓</div>
+                        <div style="background: #f8f9fa; padding: 10px; border-radius: 4px; font-size: 14px; color: #666;">JavaScript is primarily used to add interactivity and dynamic behavior to web pages.</div>
+                    </div>
+
+                    <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ddd;">
+                        <div style="color: #007AFF; font-weight: 600; margin-bottom: 5px;">Question 2</div>
+                        <div style="margin-bottom: 10px;">Which keyword is used to declare variables in ES6?</div>
+                        <div style="color: #f44336; margin-bottom: 5px;">Your answer: var ✗</div>
+                        <div style="color: #4CAF50; margin-bottom: 10px; font-weight: 500;">Correct answer: let</div>
+                        <div style="background: #f8f9fa; padding: 10px; border-radius: 4px; font-size: 14px; color: #666;">ES6 introduced 'let' and 'const' for block-scoped variable declarations, replacing 'var' in modern JavaScript.</div>
+                    </div>
                 </div>
 
                 <button class="btn">Take Another Quiz</button>

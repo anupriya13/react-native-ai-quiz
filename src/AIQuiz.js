@@ -230,14 +230,22 @@ const AIQuiz = ({
         )}
         
         <View style={styles.navigationContainer}>
-          {currentQuestionIndex > 0 && (
-            <TouchableOpacity
-              style={[styles.navButton, buttonStyle]}
-              onPress={handlePreviousQuestion}
-            >
-              <Text style={styles.buttonText}>Previous</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={[
+              styles.navButton, 
+              buttonStyle,
+              currentQuestionIndex === 0 && styles.disabledButton
+            ]}
+            onPress={handlePreviousQuestion}
+            disabled={currentQuestionIndex === 0}
+          >
+            <Text style={[
+              styles.buttonText,
+              currentQuestionIndex === 0 && styles.disabledButtonText
+            ]}>
+              Previous
+            </Text>
+          </TouchableOpacity>
           
           <TouchableOpacity
             style={[styles.navButton, buttonStyle]}
@@ -257,11 +265,57 @@ const AIQuiz = ({
     const results = calculateResults();
     
     return (
-      <View style={[styles.container, style]}>
-        <Text style={styles.title}>Quiz Complete!</Text>
+      <ScrollView style={[styles.container, style]}>
+        <Text style={styles.title}>Quiz Complete! 🎉</Text>
         <Text style={styles.scoreText}>
-          Score: {results.score}/{results.total} ({results.percentage}%)
+          Final Score: {results.score}/{results.total} ({results.percentage}%)
         </Text>
+        
+        <View style={styles.resultsSummary}>
+          <Text style={styles.resultsSummaryTitle}>Quiz Summary</Text>
+          <Text style={styles.resultsSummaryText}>
+            Topic: {quiz.topic || topic}
+          </Text>
+          <Text style={styles.resultsSummaryText}>
+            Difficulty: {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+          </Text>
+          <Text style={styles.resultsSummaryText}>
+            Questions: {results.total}
+          </Text>
+        </View>
+
+        <View style={styles.detailedResults}>
+          <Text style={styles.detailedResultsTitle}>Detailed Results</Text>
+          {results.detailed.map((result, index) => (
+            <View key={result.questionId} style={styles.resultItem}>
+              <Text style={styles.resultQuestionNumber}>
+                Question {index + 1}
+              </Text>
+              <Text style={styles.resultQuestion}>
+                {result.question}
+              </Text>
+              <View style={styles.resultAnswers}>
+                <Text style={[
+                  styles.resultAnswer,
+                  result.isCorrect ? styles.correctAnswer : styles.incorrectAnswer
+                ]}>
+                  Your answer: {result.userAnswer || 'No answer'}
+                  {result.isCorrect ? ' ✓' : ' ✗'}
+                </Text>
+                {!result.isCorrect && (
+                  <Text style={styles.correctAnswerText}>
+                    Correct answer: {result.correctAnswer}
+                  </Text>
+                )}
+              </View>
+              {result.explanation && (
+                <View style={styles.explanationContainer}>
+                  <Text style={styles.explanationText}>{result.explanation}</Text>
+                </View>
+              )}
+            </View>
+          ))}
+        </View>
         
         <TouchableOpacity
           style={[styles.button, buttonStyle]}
@@ -269,7 +323,7 @@ const AIQuiz = ({
         >
           <Text style={styles.buttonText}>Take Another Quiz</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   };
 
@@ -402,10 +456,16 @@ const styles = StyleSheet.create({
     minWidth: 80,
     alignItems: 'center',
   },
+  disabledButton: {
+    backgroundColor: '#ccc',
+  },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  disabledButtonText: {
+    color: '#999',
   },
   loadingText: {
     marginTop: 10,
@@ -418,6 +478,72 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
     color: '#333',
+  },
+  resultsSummary: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 20,
+    borderLeftWidth: 4,
+    borderLeftColor: '#007AFF',
+  },
+  resultsSummaryTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 10,
+    color: '#333',
+  },
+  resultsSummaryText: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+  },
+  detailedResults: {
+    marginBottom: 20,
+  },
+  detailedResultsTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 15,
+    color: '#333',
+  },
+  resultItem: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  resultQuestionNumber: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#007AFF',
+    marginBottom: 5,
+  },
+  resultQuestion: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 10,
+    fontWeight: '500',
+  },
+  resultAnswers: {
+    marginBottom: 10,
+  },
+  resultAnswer: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  correctAnswer: {
+    color: '#4CAF50',
+  },
+  incorrectAnswer: {
+    color: '#f44336',
+  },
+  correctAnswerText: {
+    fontSize: 14,
+    color: '#4CAF50',
+    fontWeight: '500',
   },
   errorText: {
     color: '#f44336',

@@ -8,7 +8,7 @@ Cross-platform React Native module that generates AI-powered quiz questions dyna
 ## Features
 
 - 🧠 **AI-Powered**: Generates quiz questions using Azure OpenAI (GPT-4/3.5)
-- 📱 **Cross-Platform**: Works on both iOS and Android
+- 📱 **Cross-Platform**: Works on iOS, Android, and Windows
 - 🎨 **Customizable**: Extensive styling options for UI components
 - 🔧 **Flexible**: Configurable difficulty levels and question counts
 - 📊 **Results Tracking**: Detailed quiz results with explanations
@@ -27,6 +27,16 @@ This package requires the following peer dependencies:
 ```bash
 npm install react react-native axios
 ```
+
+### Windows Support
+
+For Windows development with React Native for Windows:
+
+```bash
+npm install react-native-windows
+```
+
+This package is fully compatible with React Native for Windows applications.
 
 ## Prerequisites
 
