@@ -34,7 +34,7 @@ This module works on all React Native platforms:
 
 - ✅ **iOS** - Full support
 - ✅ **Android** - Full support  
-- ✅ **Windows** - Full support with standard React Native CLI
+- ✅ **Windows** - Full support with native Windows app capability (react-native-windows)
 - ✅ **macOS** - Compatible with React Native macOS
 - ✅ **Web** - Compatible with React Native Web
 
@@ -49,19 +49,18 @@ npm run setup:windows  # Automated Windows setup with all dependencies
 
 **⚡ Quick Start Options:**
 ```bash
-# Option 1: Automated (Recommended)
+# Option 1: Native Windows App (Recommended for Windows)
+npm run setup:windows          # Complete Windows setup
+npm run example:start           # Start Metro bundler (in one terminal)
+npm run windows:run            # Run native Windows app (in another terminal)
+
+# Option 2: Android (if you prefer Android emulator)
 npm run setup:windows          # Complete Windows setup
 npm run example:start           # Start Metro bundler
 npm run example:android         # Run on Android (new terminal)
 
-# Option 2: Manual Setup
-cd example
-npm install --legacy-peer-deps  # Windows-compatible dependency installation
-npm start                       # Start Metro
-npm run android                 # Run app (new terminal)
-
-# Option 3: All-in-one (starts setup + Metro)
-npm run example:windows
+# Option 3: Interactive Platform Chooser
+npm run windows:launcher        # Choose between Windows/Android/iOS platforms
 ```
 
 **Configure Azure OpenAI:**
@@ -76,10 +75,12 @@ const azureConfig: AzureOpenAIConfig = {
 ```
 
 **🔧 Windows Compatibility Features:**
+- ✅ **Native Windows App Support** - Run as a native Windows application (no emulator needed)
 - ✅ **Windows-specific setup script** (`setup:windows`) handles all dependencies
 - ✅ **Metro config optimized** for Windows with proper path handling
 - ✅ **Legacy peer deps support** for Windows dependency resolution  
-- ✅ **Multiple setup options** (automated, manual, step-by-step)
+- ✅ **Multiple platform options** (Windows native, Android, iOS)
+- ✅ **Interactive platform chooser** for easy app launching
 - ✅ **Comprehensive troubleshooting** for common Windows issues
 - ✅ **Works with Command Prompt and PowerShell**
 
@@ -87,7 +88,14 @@ const azureConfig: AzureOpenAIConfig = {
 - **"No Metro config found"**: Fixed with included metro.config.js
 - **npm install fails**: Use `npm install --legacy-peer-deps`
 - **Port 8081 busy**: Run `npx kill-port 8081`
+- **Windows build issues**: Ensure Visual Studio or Build Tools are installed
 - **Android issues**: Ensure Android Studio and emulator are properly configured
+
+**🪟 Windows Platform Prerequisites:**
+- Windows 10 version 1809 or higher
+- Visual Studio 2019 or 2022 with C++ tools, or Build Tools for Visual Studio
+- Windows 10 SDK (latest version)
+- PowerShell 5 or higher
 
 📚 **Complete Windows guide**: [WINDOWS_GUIDE.md](WINDOWS_GUIDE.md) - Comprehensive setup, troubleshooting, and development workflow for Windows users.
 

@@ -1,47 +1,79 @@
 # Windows Development Guide
 
-This guide provides comprehensive instructions for setting up and running the React Native AI Quiz module on Windows.
+This guide provides comprehensive instructions for setting up and running the React Native AI Quiz module on Windows with **Native Windows App Support**.
+
+## 🪟 Platform Options
+
+You can now run the app on multiple platforms:
+
+1. **🪟 Native Windows App (Recommended)** - No emulator needed, runs as a native Windows application
+2. **📱 Android** - Requires Android emulator or device
+3. **🍎 iOS** - Mac only, requires iOS Simulator
 
 ## 🚀 Quick Start Options
 
-### Option 1: Automated Windows Setup (Recommended)
+### Option 1: Native Windows App (Recommended)
 ```bash
 git clone https://github.com/anupriya13/react-native-ai-quiz.git
 cd react-native-ai-quiz
 npm run setup:windows
-```
-This runs a Windows-optimized setup script that handles all dependencies and common issues.
 
-### Option 2: Manual Setup
+# Start Metro bundler (in one terminal)
+npm run example:start
+
+# Launch Windows app (in another terminal)
+npm run windows:run
+```
+
+### Option 2: Interactive Platform Chooser
 ```bash
 git clone https://github.com/anupriya13/react-native-ai-quiz.git
 cd react-native-ai-quiz
-npm install
-cd example
-npm install --legacy-peer-deps
-npm start
+npm run setup:windows
+
+# Interactive launcher - choose your platform
+npm run windows:launcher
 ```
 
-### Option 3: Step-by-Step Commands
+### Option 3: Android (Traditional Method)
 ```bash
-# Navigate to example directory
-cd react-native-ai-quiz/example
-
-# Install dependencies with Windows compatibility
-npm install --legacy-peer-deps
+git clone https://github.com/anupriya13/react-native-ai-quiz.git
+cd react-native-ai-quiz
+npm run setup:windows
 
 # Start Metro bundler
-npm start
+npm run example:start
 
-# In a new Command Prompt or PowerShell window (keep Metro running):
-npm run android
+# Launch Android app (new terminal)
+npm run example:android
 ```
+
+## 🪟 Windows Platform Prerequisites
+
+Before running the native Windows app, ensure you have:
+
+- **Windows 10** version 1809 (October 2018 Update) or higher
+- **Visual Studio 2019 or 2022** with:
+  - MSVC v142/v143 - VS 2019/2022 C++ x64/x86 build tools
+  - Windows 10/11 SDK (latest version)
+- **Or alternatively**: Build Tools for Visual Studio with C++ tools
+- **PowerShell 5** or higher
+- **Node.js** 16 or higher
 
 ## 📱 Launching the App
 
-**Important**: The Metro bundler starting doesn't mean the app is running! You need to launch it on a device/emulator:
+**Important**: The Metro bundler starting doesn't mean the app is running! You need to launch it on a platform:
 
-### After Metro Starts:
+### Native Windows App (No Emulator Required):
+```bash
+# After Metro starts
+npm run windows:run
+
+# Or use the interactive launcher
+npm run windows:launcher  # Choose option 1 for Windows
+```
+
+### Android (Requires Emulator/Device):
 1. **Option A**: In the Metro terminal, press `a` to run on Android
 2. **Option B**: Open a new terminal and run:
    ```bash
@@ -88,33 +120,69 @@ npm run android
 
 ## 📱 Running the App
 
-### Start Metro Bundler
+You have multiple platform options for running the app:
+
+### 🪟 Option 1: Native Windows App (Recommended)
+
+**Prerequisites**: 
+- Visual Studio 2019/2022 with C++ tools or Build Tools for Visual Studio
+- Windows 10 SDK (latest version)
+
+**Steps:**
 ```bash
+# Start Metro bundler (keep this running)
 cd react-native-ai-quiz
 npm run example:start
+
+# In a new terminal, launch Windows app
+npm run windows:run
 ```
 
-### Run on Android Device/Emulator
-In a new terminal window:
+**Advantages:**
+- ✅ No emulator required
+- ✅ Native Windows performance
+- ✅ Direct access to Windows APIs
+- ✅ Better debugging experience
+
+### 📱 Option 2: Android (Traditional Method)
+
+**Prerequisites**:
+- Android Studio installed
+- Android emulator running or device connected
+
+**Steps:**
 ```bash
+# Start Metro bundler
+cd react-native-ai-quiz
+npm run example:start
+
+# In a new terminal, run on Android
 npm run example:android
 ```
 
-### Run on iOS (if on macOS via Windows Subsystem)
+### 🍎 Option 3: iOS (Mac Required)
 ```bash
 npm run example:ios
 ```
+
+### 🔄 Interactive Platform Chooser
+```bash
+npm run windows:launcher
+```
+This script provides an interactive menu to choose your preferred platform.
 
 ## 🛠️ Windows-Specific Scripts
 
 We've added several Windows-optimized npm scripts:
 
 ```bash
-npm run setup:windows      # Complete Windows setup
-npm run example:setup      # Install example dependencies only
-npm run example:start      # Start Metro bundler
-npm run example:android    # Run on Android
-npm run example:windows    # Setup + start (one command)
+npm run setup:windows          # Complete Windows setup
+npm run windows:run            # Run native Windows app
+npm run windows:launcher       # Interactive platform chooser
+npm run example:setup          # Install example dependencies only
+npm run example:start          # Start Metro bundler
+npm run example:android        # Run on Android
+npm run example:windows        # Setup + start Metro (legacy)
 ```
 
 ## 🔧 Common Windows Issues & Solutions

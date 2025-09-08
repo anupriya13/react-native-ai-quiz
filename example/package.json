@@ -5,6 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "windows": "react-native run-windows",
     "start": "react-native start",
     "start:reset": "react-native start --reset-cache",
     "clean": "cd android && ./gradlew clean && cd ..",
@@ -15,7 +16,8 @@
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-ai-quiz": "file:..",
-    "react-native-dotenv": "^3.4.11"
+    "react-native-dotenv": "^3.4.11",
+    "react-native-windows": "0.72.38"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -33,7 +35,8 @@
     "metro-react-native-babel-preset": "0.76.8",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
-    "typescript": "4.8.4"
+    "typescript": "4.8.4",
+    "metro-config": "^0.76.9"
   },
   "jest": {
     "preset": "react-native"
