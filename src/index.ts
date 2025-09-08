@@ -55,7 +55,7 @@ export class ReactNativeAIQuiz {
         topic: quizConfig.topic,
         totalQuestions: questions.length
       };
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(`Failed to generate quiz: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }

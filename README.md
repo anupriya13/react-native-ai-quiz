@@ -195,6 +195,87 @@ Shuffle an array of quiz questions.
 #### `calculateScore(questions: QuizQuestion[], userAnswers: number[]): ScoreResult` (Static)
 Calculate the quiz score based on user answers.
 
+## Local Testing
+
+Want to test the module locally? We've made it super easy! 🚀
+
+### 🎮 Quick Demo (No Azure OpenAI needed)
+```bash
+git clone https://github.com/anupriya13/react-native-ai-quiz.git
+cd react-native-ai-quiz
+npm run setup
+npm run demo  # Tests all features with sample data
+```
+
+### 🧪 Full Testing (With your Azure OpenAI)
+```bash
+# 1. Update credentials in test-local.js
+# 2. Test the core module
+npm run test-local
+
+# 3. Test the React Native app
+npm run example
+cd example && npm run android
+```
+
+📖 **For detailed instructions**: See [QUICK_START.md](QUICK_START.md) or [LOCAL_TESTING_GUIDE.md](LOCAL_TESTING_GUIDE.md)
+
+## Local Testing
+
+Want to test the module locally? We've made it super easy! 🚀
+
+### Quick Start
+
+1. **Clone and setup:**
+```bash
+git clone https://github.com/anupriya13/react-native-ai-quiz.git
+cd react-native-ai-quiz
+npm run setup
+```
+
+2. **Configure Azure OpenAI:**
+   - Update credentials in `test-local.js` and `example/App.tsx`
+   - Get your credentials from [Azure Portal](https://portal.azure.com)
+
+3. **Test the module:**
+```bash
+npm run test-local
+```
+
+4. **Test the React Native app:**
+```bash
+npm run example
+# In another terminal: cd example && npm run android
+```
+
+### What You'll Need
+
+- **Azure OpenAI Resource**: Create one at [Azure Portal](https://portal.azure.com)
+- **Model Deployment**: Deploy GPT-3.5-turbo or GPT-4 in [Azure OpenAI Studio](https://oai.azure.com)
+- **Credentials**: Get endpoint URL, API key, and deployment name
+
+### Testing Options
+
+1. **Core Module Test** (`npm run test-local`):
+   - Tests connection to Azure OpenAI
+   - Validates quiz generation
+   - Tests utility functions
+
+2. **React Native App** (`npm run example`):
+   - Full interactive demo
+   - Mobile UI testing
+   - Real-time quiz generation
+
+3. **Manual Testing**: Follow the detailed guide in `LOCAL_TESTING_GUIDE.md`
+
+### Troubleshooting
+
+- **Connection issues**: Check your Azure OpenAI credentials
+- **Build errors**: Run `npm run build` first
+- **App crashes**: Update config in `example/App.tsx`
+
+For detailed instructions, see [LOCAL_TESTING_GUIDE.md](LOCAL_TESTING_GUIDE.md).
+
 ## Example App
 
 Check out the example app in the `example/` directory for a complete implementation:

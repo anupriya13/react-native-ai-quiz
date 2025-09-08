@@ -82,7 +82,7 @@ export class AzureOpenAIHandler {
       }
 
       return parsedContent.questions as QuizQuestion[];
-    } catch (error) {
+    } catch (error: any) {
       if (axios.isAxiosError(error)) {
         throw new Error(`Azure OpenAI API Error: ${error.response?.data?.error?.message || error.message}`);
       }
@@ -112,7 +112,7 @@ export class AzureOpenAIHandler {
         }
       );
       return response.status === 200;
-    } catch (error) {
+    } catch (error: any) {
       return false;
     }
   }
