@@ -59,6 +59,8 @@ Before running the native Windows app, ensure you have:
 - **Or alternatively**: Build Tools for Visual Studio with C++ tools
 - **PowerShell 5** or higher
 - **Node.js** 16 or higher
+- **React Native** 0.79.0 or higher
+- **react-native-windows** 0.79.0 or higher
 
 ## 📱 Launching the App
 

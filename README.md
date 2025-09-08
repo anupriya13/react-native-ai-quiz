@@ -28,6 +28,10 @@ This package requires the following peer dependencies:
 npm install react react-native
 ```
 
+**Version Requirements:**
+- React Native: ≥ 0.79.0
+- React: ≥ 18.2.0
+
 ### Platform Compatibility
 
 This module works on all React Native platforms:
