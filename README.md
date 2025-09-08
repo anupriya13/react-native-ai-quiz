@@ -382,10 +382,21 @@ For detailed instructions, see [LOCAL_TESTING_GUIDE.md](LOCAL_TESTING_GUIDE.md).
 Check out the example app in the `example/` directory for a complete implementation:
 
 ```bash
+# Setup and start Metro bundler
 cd example
-npm install
-npm run start
+npm install --legacy-peer-deps
+npm start
+
+# In a new terminal: Launch the app on Android
+npm run android
 ```
+
+**Windows Users**: See the comprehensive [Windows Development Guide](WINDOWS_GUIDE.md) for setup instructions.
+
+**Important**: Starting Metro bundler is just the first step. You need to launch the app on a device:
+- Press `a` in the Metro terminal to run on Android
+- Or run `npm run android` in a separate terminal
+- Ensure Android emulator is running or device is connected
 
 The example app demonstrates:
 - Azure OpenAI configuration

@@ -33,9 +33,30 @@ npm install --legacy-peer-deps
 # Start Metro bundler
 npm start
 
-# In a new Command Prompt or PowerShell window:
+# In a new Command Prompt or PowerShell window (keep Metro running):
 npm run android
 ```
+
+## 📱 Launching the App
+
+**Important**: The Metro bundler starting doesn't mean the app is running! You need to launch it on a device/emulator:
+
+### After Metro Starts:
+1. **Option A**: In the Metro terminal, press `a` to run on Android
+2. **Option B**: Open a new terminal and run:
+   ```bash
+   cd react-native-ai-quiz/example
+   npm run android
+   ```
+3. **Option C**: Use the quick command from root:
+   ```bash
+   npm run example:launch-android
+   ```
+
+### Prerequisites for App Launch:
+- Android emulator running (from Android Studio)
+- OR physical Android device connected with USB debugging enabled
+- Run `adb devices` to verify device is connected
 
 ## 🔧 Windows-Specific Requirements
 

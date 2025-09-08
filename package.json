@@ -18,6 +18,8 @@
     "example:android": "cd example && npm run android",
     "example:ios": "cd example && npm run ios",
     "example:windows": "npm run example:setup && npm run example:start",
+    "example:launch-android": "cd example && npm run android",
+    "windows:launch-app": "node windows-launch-app.js",
     "setup:windows": "node setup-windows.js",
     "troubleshoot": "node troubleshoot-windows.js"
   },
