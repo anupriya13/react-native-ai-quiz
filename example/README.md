@@ -1,15 +1,16 @@
 # AI Quiz Example App
 
-This is an example React Native app demonstrating the usage of `react-native-ai-quiz` module.
+This is an example React Native app demonstrating the usage of `react-native-ai-quiz` module with secure configuration.
 
 ## Features Demonstrated
 
-- Azure OpenAI configuration setup (in code)
+- **🔐 Secure Azure OpenAI configuration** (environment variables)
 - Quiz generation with customizable topics and difficulty
 - Interactive quiz interface
 - Real-time answer selection
 - Score calculation and results display
 - Question explanations after completion
+- Configuration status monitoring
 
 ## Setup
 
@@ -18,12 +19,24 @@ This is an example React Native app demonstrating the usage of `react-native-ai-
 npm install
 ```
 
-2. Start the Metro bundler:
+2. **Configure Azure OpenAI credentials securely**:
+```bash
+# Copy the environment template
+cp .env.example .env
+
+# Edit .env with your actual credentials
+# AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+# AZURE_OPENAI_API_KEY=your-api-key-here
+# AZURE_OPENAI_DEPLOYMENT_NAME=gpt-35-turbo
+# AZURE_OPENAI_API_VERSION=2023-12-01-preview
+```
+
+3. Start the Metro bundler:
 ```bash
 npm run start
 ```
 
-3. Run on your preferred platform:
+4. Run on your preferred platform:
 ```bash
 # For Android
 npm run android
@@ -32,57 +45,88 @@ npm run android
 npm run ios
 ```
 
-## Configuration
+## 🔐 Secure Configuration
 
-Before using the app, you'll need to configure your Azure OpenAI credentials in the code:
+This app uses environment variables to securely store Azure OpenAI credentials:
 
-1. Open `App.tsx` 
-2. Find the `azureConfig` object (around line 28)
-3. Replace the placeholder values with your actual Azure OpenAI credentials:
-   - **Endpoint**: Your Azure OpenAI resource endpoint (e.g., `https://your-resource.openai.azure.com`)
-   - **API Key**: Your Azure OpenAI API key
-   - **Deployment Name**: The name of your deployed model (e.g., `gpt-35-turbo`)
+### Quick Setup
+1. **Copy environment template**: `cp .env.example .env`
+2. **Update credentials**: Edit `.env` with your Azure OpenAI details
+3. **Run the app**: The configuration status will show ✅ if properly configured
 
-```typescript
-const azureConfig: AzureOpenAIConfig = {
-  endpoint: 'https://your-resource.openai.azure.com',
-  apiKey: 'your-actual-api-key',
-  deploymentName: 'your-deployment-name',
-  apiVersion: '2023-12-01-preview',
-};
-```
+### Getting Azure OpenAI Credentials
+- **Endpoint**: Azure Portal → Your OpenAI Resource → Keys and Endpoint
+- **API Key**: Same section, copy KEY 1 or KEY 2
+- **Deployment Name**: Azure OpenAI Studio → Your model deployment name
+- **API Version**: Use `2024-02-15-preview` for latest features
+
+### Security Features
+- ✅ No hardcoded credentials in source code
+- ✅ `.env` files excluded from version control
+- ✅ Real-time configuration status monitoring
+- ✅ Clear setup instructions and error messages
 
 ## Usage
 
-1. Configure your Azure OpenAI credentials in `App.tsx` (see Configuration section above)
-2. Enter a topic for your quiz (e.g., "React Native", "JavaScript", "Python")
-3. Set the number of questions (1-20)
-4. Choose difficulty level (easy, medium, hard)
-5. Tap "Generate Quiz" to create questions
-6. Answer all questions by tapping on the options
-7. Tap "Submit Quiz" to see your results
+1. **Configure credentials**: Follow the setup instructions above
+2. **Enter a topic**: e.g., "React Native", "JavaScript", "Python"
+3. **Set question count**: 1-20 questions
+4. **Choose difficulty**: easy, medium, or hard
+5. **Generate quiz**: App will create questions using Azure OpenAI
+6. **Take the quiz**: Answer all questions by tapping options
+7. **View results**: See your score with explanations
+
+## Configuration Status
+
+The app displays real-time configuration status:
+- ✅ **Azure OpenAI Configured**: Ready to generate quizzes
+- ⚠️ **Configuration Required**: Update .env file with credentials
 
 ## Features
 
-- **Simplified setup**: Configuration is done once in the code, not through UI forms
-- **Loading states**: Shows loading indicator while generating questions
-- **Answer tracking**: Highlights selected answers and shows correct/incorrect after submission
-- **Score calculation**: Displays final score with percentage
-- **Explanations**: Shows explanations for each question after completion
-- **Responsive design**: Works on both phones and tablets
+- **🔐 Secure configuration**: Environment variables for credentials
+- **📊 Real-time status**: Shows configuration state
+- **⚡ Loading states**: Loading indicator during quiz generation
+- **🎯 Answer tracking**: Highlights selected answers
+- **📈 Score calculation**: Final score with percentage
+- **💡 Explanations**: Detailed explanations after completion
+- **📱 Responsive design**: Works on phones and tablets
 
 ## Troubleshooting
 
-If you encounter issues:
+### Configuration Issues
+- **"Configuration Required" warning**: 
+  - Ensure `.env` file exists in the example directory
+  - Check all environment variables are set correctly
+  - Restart Metro bundler: `npx react-native start --reset-cache`
 
-1. **Quiz generation fails**: Check your Azure OpenAI configuration
-2. **Network errors**: Ensure you have internet connectivity
-3. **Build issues**: Make sure all dependencies are installed correctly
+### Quiz Generation Fails
+- Verify Azure OpenAI credentials in `.env`
+- Check internet connectivity
+- Ensure your Azure OpenAI deployment is active
+
+### Build Issues
+- Install dependencies: `npm install --legacy-peer-deps`
+- Clear Metro cache: `npx react-native start --reset-cache`
+- Check TypeScript configuration
+
+## Security
+
+For detailed security information, see [SECURITY.md](../SECURITY.md).
+
+**Important**: Never commit `.env` files to version control!
 
 ## Code Structure
 
-- `App.tsx`: Main application component with all quiz functionality
-- `package.json`: Dependencies and scripts
-- `index.js`: Entry point for React Native
-- `babel.config.js`: Babel configuration for React Native
-- `tsconfig.json`: TypeScript configuration
+- `App.tsx`: Main application with secure configuration
+- `.env.example`: Environment template
+- `types/env.d.ts`: TypeScript declarations for environment variables
+- `babel.config.js`: Configured with react-native-dotenv
+- `tsconfig.json`: TypeScript configuration for environment variables
+
+## Support
+
+For issues or questions:
+1. Check the [Security Guide](../SECURITY.md)
+2. Review the main [README](../README.md)
+3. Open an issue (without sensitive data)

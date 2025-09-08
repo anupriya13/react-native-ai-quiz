@@ -6,6 +6,7 @@ Cross-platform React Native module that generates AI-powered quiz questions dyna
 
 - 🤖 AI-powered quiz generation using Azure OpenAI
 - 📱 Cross-platform support (iOS & Android)
+- 🔐 **Secure configuration** with environment variables
 - 🎯 Customizable difficulty levels (easy, medium, hard)
 - 📝 Multiple question types support
 - 🔄 Flexible initialization options
@@ -27,7 +28,7 @@ This package requires the following peer dependencies:
 npm install react react-native
 ```
 
-## Setup
+## 🔐 Secure Setup
 
 ### Azure OpenAI Configuration
 
@@ -37,7 +38,44 @@ Before using this module, you need to set up Azure OpenAI:
 2. Deploy a model (e.g., GPT-3.5-turbo or GPT-4)
 3. Get your endpoint URL, API key, and deployment name
 
+### Environment Variables (Recommended)
+
+For production apps, use environment variables:
+
+```bash
+# .env
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_API_KEY=your-api-key-here
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-35-turbo
+AZURE_OPENAI_API_VERSION=2023-12-01-preview
+```
+
+See [SECURITY.md](SECURITY.md) for complete security setup guide.
+
 ## Usage
+
+### Secure Usage (Recommended)
+
+```typescript
+import { ReactNativeAIQuiz } from 'react-native-ai-quiz';
+import { AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY, AZURE_OPENAI_DEPLOYMENT_NAME } from '@env';
+
+// Configure securely with environment variables
+const azureConfig = {
+  endpoint: AZURE_OPENAI_ENDPOINT,
+  apiKey: AZURE_OPENAI_API_KEY,
+  deploymentName: AZURE_OPENAI_DEPLOYMENT_NAME,
+  apiVersion: '2023-12-01-preview',
+};
+
+const aiQuiz = new ReactNativeAIQuiz();
+const quiz = await aiQuiz.generateQuiz({
+  topic: 'React Native',
+  numberOfQuestions: 5,
+  difficulty: 'medium',
+  azureConfig,
+});
+```
 
 ### Basic Usage
 
@@ -293,6 +331,38 @@ The example app demonstrates:
 - Score calculation and result display
 - Question explanations
 
+## 🔐 Security
+
+### Important Security Considerations
+
+- **Never expose API keys**: Don't hardcode Azure OpenAI credentials in your source code
+- **Use environment variables**: Store sensitive configuration securely
+- **Version control**: Ensure `.env` files are in `.gitignore`
+- **Production deployment**: Consider server-side proxy for maximum security
+
+### Security Best Practices
+
+```typescript
+// ❌ DON'T: Hardcode credentials
+const azureConfig = {
+  apiKey: 'sk-1234567890abcdef', // Never do this!
+};
+
+// ✅ DO: Use environment variables
+import { AZURE_OPENAI_API_KEY } from '@env';
+const azureConfig = {
+  apiKey: AZURE_OPENAI_API_KEY,
+};
+```
+
+### Complete Security Setup
+
+For detailed security configuration, see [SECURITY.md](SECURITY.md):
+- Environment variable setup
+- Production deployment strategies
+- Security checklist
+- Troubleshooting guide
+
 ## Error Handling
 
 The module provides detailed error messages for common issues:
@@ -313,10 +383,13 @@ try {
 
 ## Security Notes
 
-- Never expose your Azure OpenAI API key in client-side code
-- Store API keys securely using environment variables or secure storage
-- Consider implementing server-side proxy for production apps
-- Validate and sanitize user inputs before generating quizzes
+> **Important**: See [SECURITY.md](SECURITY.md) for comprehensive security setup guide.
+
+- ✅ Use environment variables for Azure OpenAI credentials
+- ✅ Never commit API keys to version control
+- ✅ Implement proper error handling to avoid credential exposure
+- ✅ Consider server-side proxy for production applications
+- ✅ Validate and sanitize user inputs before generating quizzes
 
 ## Troubleshooting
 

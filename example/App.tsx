@@ -12,25 +12,40 @@ import {
 } from 'react-native';
 
 import { ReactNativeAIQuiz, QuizQuestion, AzureOpenAIConfig } from 'react-native-ai-quiz';
+import {
+  AZURE_OPENAI_ENDPOINT,
+  AZURE_OPENAI_API_KEY,
+  AZURE_OPENAI_DEPLOYMENT_NAME,
+  AZURE_OPENAI_API_VERSION,
+} from '@env';
 
 /**
- * React Native AI Quiz Demo App
+ * React Native AI Quiz Demo App with Secure Configuration
  * 
- * To use this app with your Azure OpenAI service:
- * 1. Replace the azureConfig values below with your actual Azure OpenAI credentials
- * 2. Get your endpoint from Azure Portal (e.g., https://your-resource.openai.azure.com)
- * 3. Get your API key from Azure Portal > Your OpenAI Resource > Keys and Endpoint
- * 4. Use your deployment name (the name you gave to your model deployment)
+ * Azure OpenAI credentials are now securely loaded from environment variables.
+ * 
+ * Setup Instructions:
+ * 1. Copy .env.example to .env in the example/ directory
+ * 2. Update .env with your actual Azure OpenAI credentials:
+ *    - AZURE_OPENAI_ENDPOINT: Your Azure OpenAI endpoint (e.g., https://your-resource.openai.azure.com)
+ *    - AZURE_OPENAI_API_KEY: Your API key from Azure Portal
+ *    - AZURE_OPENAI_DEPLOYMENT_NAME: Your model deployment name
+ *    - AZURE_OPENAI_API_VERSION: API version (default: 2023-12-01-preview)
+ * 3. The .env file is excluded from version control for security
  */
 
 const App = () => {
-  // Configure your Azure OpenAI settings here
+  // Securely configure Azure OpenAI using environment variables
   const azureConfig: AzureOpenAIConfig = {
-    endpoint: 'https://your-resource.openai.azure.com',
-    apiKey: 'your-api-key-here',
-    deploymentName: 'gpt-35-turbo',
-    apiVersion: '2023-12-01-preview',
+    endpoint: AZURE_OPENAI_ENDPOINT || 'https://your-resource.openai.azure.com',
+    apiKey: AZURE_OPENAI_API_KEY || 'your-api-key-here',
+    deploymentName: AZURE_OPENAI_DEPLOYMENT_NAME || 'gpt-35-turbo',
+    apiVersion: AZURE_OPENAI_API_VERSION || '2023-12-01-preview',
   };
+  
+  // Check if configuration is properly set up
+  const isConfigured = azureConfig.endpoint !== 'https://your-resource.openai.azure.com' && 
+                      azureConfig.apiKey !== 'your-api-key-here';
   
   const [topic, setTopic] = useState('');
   const [numberOfQuestions, setNumberOfQuestions] = useState('5');
@@ -45,6 +60,20 @@ const App = () => {
   const handleGenerateQuiz = async () => {
     if (!topic) {
       Alert.alert('Error', 'Please enter a topic for the quiz');
+      return;
+    }
+
+    if (!isConfigured) {
+      Alert.alert(
+        'Configuration Required',
+        'Please set up your Azure OpenAI credentials in the .env file. See the setup instructions in the code comments.',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log('Please configure Azure OpenAI credentials in .env file'),
+          },
+        ]
+      );
       return;
     }
 
@@ -87,6 +116,21 @@ const App = () => {
       `You scored ${results.correct} out of ${results.total} (${results.percentage}%)`
     );
   };
+
+  const renderConfigurationStatus = () => (
+    <View style={[styles.configStatus, isConfigured ? styles.configStatusSuccess : styles.configStatusWarning]}>
+      <Text style={styles.configStatusText}>
+        {isConfigured 
+          ? '✅ Azure OpenAI Configured' 
+          : '⚠️ Configuration Required - Update .env file'}
+      </Text>
+      {!isConfigured && (
+        <Text style={styles.configInstructions}>
+          Copy .env.example to .env and add your Azure OpenAI credentials
+        </Text>
+      )}
+    </View>
+  );
 
   const renderQuizConfigSection = () => (
     <View style={styles.section}>
@@ -175,9 +219,11 @@ const App = () => {
         
         <View style={styles.demoNotice}>
           <Text style={styles.demoText}>
-            Demo Mode: This shows the React Native app interface. The actual app connects to Azure OpenAI to generate real quiz questions.
+            Secure Configuration: Azure OpenAI credentials are loaded from environment variables for security.
           </Text>
         </View>
+        
+        {renderConfigurationStatus()}
         
         {renderQuizConfigSection()}
         
@@ -233,6 +279,30 @@ const styles = StyleSheet.create({
   demoText: {
     fontSize: 14,
     color: '#856404',
+    fontStyle: 'italic',
+  },
+  configStatus: {
+    padding: 12,
+    marginBottom: 16,
+    borderRadius: 8,
+    borderLeftWidth: 4,
+  },
+  configStatusSuccess: {
+    backgroundColor: '#d4edda',
+    borderLeftColor: '#28a745',
+  },
+  configStatusWarning: {
+    backgroundColor: '#fff3cd',
+    borderLeftColor: '#ffc107',
+  },
+  configStatusText: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  configInstructions: {
+    fontSize: 12,
+    color: '#666',
     fontStyle: 'italic',
   },
   section: {
