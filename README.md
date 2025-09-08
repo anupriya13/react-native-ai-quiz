@@ -28,6 +28,22 @@ This package requires the following peer dependencies:
 npm install react react-native
 ```
 
+### Platform Compatibility
+
+This module works on all React Native platforms:
+
+- ✅ **iOS** - Full support
+- ✅ **Android** - Full support  
+- ✅ **Windows** - Works with standard React Native for Windows
+- ✅ **macOS** - Compatible with React Native macOS
+- ✅ **Web** - Compatible with React Native Web
+
+**Windows Development:**
+- Use standard React Native CLI on Windows
+- No need for `react-native-windows` unless targeting Windows platform specifically
+- Supports development with Visual Studio Code, Android Studio
+- Metro bundler works correctly with the provided metro.config.js
+
 ## 🔐 Secure Setup
 
 ### Azure OpenAI Configuration
@@ -419,6 +435,44 @@ try {
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+## Publishing to NPM
+
+This package is ready for NPM publishing with the following setup:
+
+### Package Configuration
+- **Entry Point**: `lib/index.js` (compiled TypeScript)
+- **TypeScript Definitions**: `lib/index.d.ts`
+- **Published Files**: Only essential files (`lib/`, `src/`, `README.md`, `LICENSE`)
+- **Version**: Currently v1.0.0
+
+### Publishing Steps
+
+```bash
+# 1. Build the package
+npm run build
+
+# 2. Update version (if needed)
+npm version patch|minor|major
+
+# 3. Publish to NPM
+npm publish
+
+# For scoped packages (if moving to @username/react-native-ai-quiz)
+npm publish --access public
+```
+
+### NPM Scripts
+- `npm run build` - Compiles TypeScript to lib/
+- `npm run prepare` - Automatically runs build before publishing
+- `npm run demo` - Test all features without Azure OpenAI
+- `npm run test-local` - Test with Azure OpenAI credentials
+
+### Requirements for Publishing
+- NPM account with publishing permissions
+- Package name availability on NPM registry
+- All dependencies properly declared in package.json
+- TypeScript compilation successful
 
 ## License
 

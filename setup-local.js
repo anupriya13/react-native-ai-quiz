@@ -39,13 +39,13 @@ function createConfigFile() {
 async function setup() {
   try {
     // 1. Install main dependencies
-    runCommand('npm install', 'Installing main module dependencies');
+    runCommand('npm install --legacy-peer-deps', 'Installing main module dependencies');
     
     // 2. Build the TypeScript module
     runCommand('npm run build', 'Building TypeScript module');
     
     // 3. Set up example app
-    runCommand('cd example && npm install', 'Installing example app dependencies');
+    runCommand('cd example && npm install --legacy-peer-deps', 'Installing example app dependencies');
     
     // 4. Create example config file
     createConfigFile();
@@ -64,7 +64,13 @@ async function setup() {
     console.log('3️⃣ Test the React Native app:');
     console.log('   • Update the config in example/App.tsx');
     console.log('   • Run: cd example && npm run start');
-    console.log('   • In another terminal: npm run android (or npm run ios)\n');
+    console.log('   • In another terminal: npm run android (or npm run ios)');
+    console.log('   • Windows: Use npm run android for Android emulator\n');
+    
+    console.log('🪟 Windows users:');
+    console.log('   • Use standard React Native CLI');
+    console.log('   • Metro bundler now works correctly with metro.config.js');
+    console.log('   • No need for react-native-windows unless targeting Windows platform specifically\n');
     
     console.log('📚 For detailed instructions, see LOCAL_TESTING_GUIDE.md\n');
     

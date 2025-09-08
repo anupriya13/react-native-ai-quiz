@@ -278,6 +278,39 @@ Create `test-web.html`:
    cd ios && xcodebuild clean && cd ..
    ```
 
+### Windows-Specific Issues
+
+4. **"No Metro config found" error on Windows**:
+   - **Fixed**: The example app now includes `metro.config.js`
+   - If you still see this error, ensure you're in the `example/` directory
+   - Verify metro.config.js exists in the example folder
+
+5. **Windows dependency issues**:
+   ```bash
+   # Use legacy peer deps for Windows compatibility
+   npm install --legacy-peer-deps
+   
+   # In example directory
+   cd example
+   npm install --legacy-peer-deps
+   ```
+
+6. **Windows React Native setup**:
+   - Use standard React Native CLI (no need for react-native-windows)
+   - Ensure Android Studio is properly configured
+   - Use Windows Subsystem for Linux (WSL) for better compatibility (optional)
+   - Metro bundler works correctly with the provided configuration
+
+7. **Path issues on Windows**:
+   ```bash
+   # Use forward slashes in commands
+   cd example && npm start
+   
+   # Or use Windows-style paths
+   cd example
+   npm start
+   ```
+
 4. **TypeScript compilation errors**:
    ```bash
    npm run build
