@@ -34,15 +34,49 @@ This module works on all React Native platforms:
 
 - ✅ **iOS** - Full support
 - ✅ **Android** - Full support  
-- ✅ **Windows** - Works with standard React Native for Windows
+- ✅ **Windows** - Full support with standard React Native CLI
 - ✅ **macOS** - Compatible with React Native macOS
 - ✅ **Web** - Compatible with React Native Web
 
-**Windows Development:**
-- Use standard React Native CLI on Windows
-- No need for `react-native-windows` unless targeting Windows platform specifically
-- Supports development with Visual Studio Code, Android Studio
-- Metro bundler works correctly with the provided metro.config.js
+## 🪟 Windows Development Guide
+
+**Quick Start on Windows:**
+```bash
+# Option 1: One-command start (from root directory)
+git clone https://github.com/anupriya13/react-native-ai-quiz.git
+cd react-native-ai-quiz
+npm run example  # Installs dependencies and starts Metro
+
+# Option 2: Manual setup (for customization)
+cd react-native-ai-quiz/example
+npm install --legacy-peer-deps
+npm start  # Start Metro bundler
+npm run android  # Run on Android (in new terminal)
+```
+
+**Configure Azure OpenAI:**
+Edit `example/App.tsx` lines 28-33 with your Azure OpenAI credentials:
+```typescript
+const azureConfig: AzureOpenAIConfig = {
+  endpoint: 'https://your-resource.openai.azure.com',
+  apiKey: 'your-api-key-here',
+  deploymentName: 'gpt-35-turbo',
+  apiVersion: '2023-12-01-preview',
+};
+```
+
+**Windows Compatibility:**
+- ✅ Works with standard React Native CLI (no `react-native-windows` needed)
+- ✅ Metro config included to fix "No Metro config found" error
+- ✅ Compatible with VS Code, Android Studio
+- ✅ Supports `--legacy-peer-deps` for dependency resolution
+
+**Windows-Specific Troubleshooting:**
+- **Metro Error**: Ensure you're in `example/` directory, not root
+- **Dependencies**: Use `npm install --legacy-peer-deps`
+- **Clear Cache**: `npx react-native start --reset-cache`
+
+📚 **Complete Windows guide**: [LOCAL_TESTING_GUIDE.md](LOCAL_TESTING_GUIDE.md#windows-specific-issues)
 
 ## 🔐 Secure Setup
 
