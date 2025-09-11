@@ -1,0 +1,10 @@
+#include "NamespaceRedirect.h"
+
+namespace ai-quiz-example
+{
+    [default_interface]
+    runtimeclass MainPage : XAML_NAMESPACE.Controls.Page
+    {
+        MainPage();
+    }
+}
